@@ -93,9 +93,9 @@ function TambahBarang(props) {
     });
   };
 
-  const handleSubmit = async (e) => {
+  /*const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
+    const formData = new FormData(); */
     /*formData.append('jenis_barang', data.jenis_barang);
     formData.append('merk', data.merk);
     formData.append('no_bmn', data.no_bmn);
@@ -108,7 +108,7 @@ function TambahBarang(props) {
     ormData.append('nilai_pengadaan', data.nilai_pengadaan);
 
     );*/
-    formData.append('kode_barang', data.kode_barang);
+    /*formData.append('kode_barang', data.kode_barang);
     formData.append('nama_barang', data.nama_barang);
     formData.append('nup', data.nup);
     formData.append('kondisi', data.kondisi);
@@ -143,7 +143,7 @@ function TambahBarang(props) {
           ruangan: '',
           tahun_pengadaan: moment(), // reset to moment
           nilai_pengadaan: 0, */
-          kode_barang: '',
+          /*kode_barang: '',
           nama_barang: '',
           nup: '',
           kondisi: '',
@@ -159,7 +159,41 @@ function TambahBarang(props) {
       .catch((err) => {
         console.error(err);
       });
-  };
+  }; */
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const formData = {
+        kode_barang: "K123",
+        nama_barang: "Nama Barang",
+        nup: "123",
+        kondisi: "Baik",
+        merek: "Merek A",
+        tgl_perolehan: "2023-07-28",
+        nilai_perolehan_pertama: 1000000,
+        pemegang_bmn: "Pemegang A"
+    };
+
+    try {
+        const response = await fetch("/api/cart/add", {
+            method: "POST", // Pastikan metode HTTP sesuai
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("Sukses:", result);
+    } catch (error) {
+        console.error("Error:", error);
+    }
+};
+
 
   return (
     <MainLayout user={props?.auth.user} roles={props?.auth.roles}>

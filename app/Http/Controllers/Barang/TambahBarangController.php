@@ -31,15 +31,30 @@ class TambahBarangController extends Controller
 
     public function tambahBarang(Request $request)
     {
+        $request->validate([
+            'kode_barang' => 'required|string|unique:barangs,kode_barang',
+            'nama_barang' => 'required|string',
+            'nup' => 'required|string',
+            'merek' => 'required|string',
+            'tgl_perolehan' => 'required|date',
+            'nilai_perolehan_pertama' => 'required|integer',
+            'pemegang_bmn' => 'required|integer',
+            'jenis_barang' => 'required|uuid',
+            'ruangan' => 'required|uuid',
+            'penanggung_jawab' => 'required|uuid'
+        ]);
+
         $barang = new Barang();
+        $barang->kode_barang = $request->kode_barang;
+        $barang->nama_barang = $request->nama_barang;
+        $barang->nup = $request->nup;
+        $barang->merek = $request->merek;
+        $barang->tgl_perolehan = $request->tgl_perolehan;
+        $barang->nilai_perolehan_pertama = $request->nilai_perolehan_pertama;
+        $barang->pemegang_bmn = $request->pemegang_bmn;
         $barang->jenis_barang_id = $request->jenis_barang;
-        $barang->merk = $request->merk;
-        $barang->no_bmn = $request->no_bmn;
-        $barang->status = $request->status;
-        $barang->user_id = $request->penanggung_jawab;
         $barang->ruangan_id = $request->ruangan;
-        $barang->tahun_pengadaan = $request->tahun_pengadaan;
-        $barang->nilai_pengadaan = $request->nilai_pengadaan;
+        $barang->user_id = $request->penanggung_jawab;
         $barang->save();
 
         if ($request->has('images')) {

@@ -135,44 +135,36 @@ function ReactTable({ columns, data }) {
                 </TableHead>
                 <TableBody {...getTableBodyProps()}>
                     {headerGroups.map((group) => (
-                        <TableRow key={group} {...group.getHeaderGroupProps()}>
-                            {group.headers.map((column) => {
-                                return (
-                                    <TableCell
-                                        key={column}
-                                        {...column.getHeaderProps([
-                                            { className: column.className },
-                                        ])}
-                                    >
-                                        {column.canFilter
-                                            ? column.render("Filter")
-                                            : null}
-                                    </TableCell>
-                                );
-                            })}
+                        <TableRow key={group.id} {...group.getHeaderGroupProps()}>
+                            {group.headers.map((column) => (
+                                <TableCell
+                                    key={column.id}
+                                    {...column.getHeaderProps([
+                                        { className: column.className },
+                                    ])}
+                                >
+                                    {column.canFilter
+                                        ? column.render("Filter")
+                                        : null}
+                                </TableCell>
+                            ))}
                         </TableRow>
                     ))}
                     {page.length > 0 ? (
                         page.map((row) => {
                             prepareRow(row);
                             return (
-                                <TableRow key={row} {...row.getRowProps()}>
-                                    {row.cells.map((cell) => {
-                                        return (
-                                            <TableCell
-                                                key={cell}
-                                                {...cell.getCellProps([
-                                                    {
-                                                        className:
-                                                            cell.column
-                                                                .className,
-                                                    },
-                                                ])}
-                                            >
-                                                {cell.render("Cell")}
-                                            </TableCell>
-                                        );
-                                    })}
+                                <TableRow key={row.id} {...row.getRowProps()}>
+                                    {row.cells.map((cell) => (
+                                        <TableCell
+                                            key={cell.column.id}
+                                            {...cell.getCellProps([
+                                                { className: cell.column.className },
+                                            ])}
+                                        >
+                                            {cell.render("Cell")}
+                                        </TableCell>
+                                    ))}
                                 </TableRow>
                             );
                         })
@@ -243,7 +235,7 @@ const RiwayatPengaduan = (props) => {
             },
             {
                 Header: "Nama Barang",
-                accessor: "barang",
+                accessor: "Nama barang",
             },
             {
                 Header: "Pelapor",
